@@ -1,0 +1,32 @@
+# Local credentials and machine-specific configuration
+.env
+.env.*
+**/.env
+**/.env.*
+/config/database.local.php
+/config/local.php
+
+# Database backups and local diagnostic output
+/database/backups/
+*.sql.gz
+*.dump
+*.log
+*.bak
+
+# Product images uploaded while using the application
+/assets/images/products/*
+!/assets/images/products/.htaccess
+
+# Private keys and local certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local tooling and operating-system files
+/vendor/
+/node_modules/
+.phpunit.cache/
+.DS_Store
+Thumbs.db
+desktop.ini
