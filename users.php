@@ -109,7 +109,7 @@ require __DIR__ . '/includes/header.php';
         <form method="post" class="stacked-form">
             <?= csrf_field() ?><input type="hidden" name="action" value="create">
             <label for="user-name">Full name</label><input id="user-name" name="full_name" maxlength="150" required>
-            <label for="user-username">Username</label><input id="user-username" name="username" minlength="3" maxlength="80" pattern="[A-Za-z0-9_.-]+" autocomplete="off" required>
+            <label for="user-username">Username</label><input id="user-username" name="username" minlength="3" maxlength="80" pattern="[A-Za-z0-9_.\-]+" autocomplete="off" required>
             <label for="user-password">Temporary password</label><input id="user-password" name="password" type="password" minlength="12" autocomplete="new-password" required>
             <label for="user-role">Role</label><select id="user-role" name="role"><option value="cashier">Cashier</option><option value="administrator">Administrator</option></select>
             <p class="form-hint">Use a unique password with at least 12 characters. Passwords are stored as secure hashes.</p>

@@ -295,6 +295,8 @@ tbody tr:last-child td { border-bottom: 0; }
 .button-primary:hover { background: #593822; }
 .button-wide { margin-top: 4px; width: 100%; }
 .login-note { border-top: 1px solid #eee9e2; margin: 22px 0 0; padding-top: 15px; }
+.login-register { color: #928a82; font-size: 12px; line-height: 1.65; margin: 18px 0 0; }
+.login-register a { color: var(--coffee); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .back-link { color: #79553c; display: inline-block; font-size: 11px; margin-top: 18px; }
 
 @media (max-width: 1100px) {

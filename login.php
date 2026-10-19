@@ -104,7 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input id="password" name="password" type="password" autocomplete="current-password" required>
                     <button class="button button-primary button-wide" type="submit">Sign in <span aria-hidden="true">→</span></button>
                 </form>
-                <p class="login-note">First time here? Create an administrator using the local command-line setup utility.</p>
+                <p class="login-register">Need a staff account? <a href="<?= e(APP_BASE_URL) ?>/register.php">Create account</a></p>
+                <p class="login-note">New accounts are ready to use immediately with cashier access. The first administrator is created with the local command-line setup utility.</p>
                 <a class="back-link" href="<?= e(APP_BASE_URL) ?>/">← Back to home</a>
             </div>
         </section>

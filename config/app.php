@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 define('APP_NAME', 'Brew & Bean');
 define('APP_BASE_URL', '/coffee_management');
-define('APP_ASSET_VERSION', '2');
+define('APP_ASSET_VERSION', '3');
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     ini_set('session.use_strict_mode', '1');

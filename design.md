@@ -27,6 +27,7 @@ The current design tokens are defined in `assets/css/style.css`:
 - The administrator-only database browser lists a selected table in a horizontally scrollable grid, with separate edit forms and explicitly confirmed delete actions.
 - POS emphasizes product discovery and a persistent cart/checkout summary.
 - Login has a distinct split story/form layout.
+- Login provides a clearly labeled account-creation link; the matching registration form explains that successful sign-up grants immediate cashier access.
 - The layout adapts for narrow screens using the existing responsive CSS and sidebar toggle in `assets/js/app.js`.
 
 ## Interaction and feedback

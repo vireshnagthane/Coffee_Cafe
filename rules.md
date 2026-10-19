@@ -15,6 +15,7 @@ These rules apply to project changes and should preserve the existing PHP/XAMPP 
 ## Security and data handling
 
 - Require authentication and the narrowest appropriate role on every protected page and action.
+- Public registration may create only active cashier accounts; administrator access must come from the protected team-management flow or CLI bootstrap.
 - Recheck the current active account and role on authenticated requests; fail closed if the account cannot be verified.
 - State-changing requests must use POST and validate the session CSRF token.
 - Configure strict cookie-only sessions, sensible browser security headers, no-store responses for dynamic pages, and a Content Security Policy that does not require inline JavaScript.

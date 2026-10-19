@@ -9,7 +9,7 @@
 
 ## Request flow
 
-1. A browser requests a PHP page from Apache.
+1. A browser requests a PHP page from Apache. Visitors can submit a CSRF-protected staff registration form through `register.php`; successful registrations create an active cashier account and sign the user in immediately.
 2. The page loads `config/app.php`, which configures strict cookie-only sessions and emits the shared security headers. Protected pages load `includes/auth.php`, which verifies the account is still active and refreshes its role from the database before applying page-level role checks.
 3. Database-backed pages load `config/database.php` and use the shared `db(): PDO` connection.
 4. A POST handler validates the request and CSRF token. Multi-row business operations use PDO transactions and database constraints.
@@ -18,7 +18,7 @@
 
 ## Main areas
 
-- **Entry and authentication:** `index.php`, `login.php`, `logout.php`, `includes/auth.php`, and `includes/csrf.php`.
+- **Entry and authentication:** `index.php`, `login.php`, `register.php`, `logout.php`, `includes/auth.php`, and `includes/csrf.php`.
 - **Business screens:** root PHP pages for dashboard, catalog, POS, orders/receipts, inventory, purchases, customers, suppliers, expenses, reports, settings, users, and the administrator-only `database.php` record browser.
 - **Shared code/configuration:** `includes/` and `config/`.
 - **Database lifecycle:** `database/coffee_management.sql` creates the schema and default settings. `sample_data.sql` and `seed_demo_sales.php` are optional demo-data tools. `create_admin.php` and `create_admin.ps1` bootstrap the first administrator.

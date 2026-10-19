@@ -5,6 +5,7 @@ A local-first coffee shop management application built with native PHP, MySQL/Ma
 ## Current features
 
 - Password-hashed administrator and cashier accounts, role checks, CSRF protection and POST-only state changes.
+- Login-page cashier registration with password confirmation and immediate sign-in; public registration cannot create administrator accounts.
 - A clearly labeled **Sign out** button in the top-right corner of authenticated pages, styled to match the shared light buttons.
 - Database-backed dashboard, categories and product management.
 - Validated product-image uploads, stored under a generated filename.
@@ -103,7 +104,7 @@ XAMPP installation paths and MySQL credentials vary. If PHP is installed elsewhe
    ```
 
    This setup utility refuses to create an administrator if one already exists. Do not expose the script through Apache; it explicitly exits unless run by PHP CLI.
-11. Open [http://localhost/coffee_management/](http://localhost/coffee_management/) and sign in with the account you just created.
+11. Open [http://localhost/coffee_management/](http://localhost/coffee_management/) and sign in with the administrator account you just created. Staff can select **Create account** on the sign-in page to create a cashier account and sign in immediately. Public registration cannot create administrator accounts; any public visitor can register for cashier access, so only use this local-first application on the local computer or a trusted network.
 12. Open **Settings** to configure the cafe name, contact details, currency, tax rate and receipt footer. Tax is exclusive: it is calculated on subtotal minus discount, then added to the total. The default tax rate is zero.
 13. Add categories and products. New products receive their IDs automatically; choose an existing category and use a unique product name. In **Inventory**, add ingredients, record opening quantities, set minimum levels and configure each product's recipe. Products with no recipe lines do not consume ingredient stock.
 14. Add suppliers and customers if needed. Use the POS to record an order. A selected cash, UPI or card method is only recorded; no payment is sent to a gateway.
@@ -128,7 +129,9 @@ The connection uses `utf8mb4`, exceptions and native PDO prepared statements. Co
 ## Local security and deployment
 
 - Use this application only on the local computer or a trusted local network. The default database connection uses the XAMPP `root` account and an empty password when no database environment variables are set; replace this with a dedicated least-privilege database account before sharing the application or storing real business data.
+- Public registration immediately creates an active cashier account and signs the new user in. Anyone who can access the registration page can obtain cashier permissions; do not expose the application to an untrusted network. Public registration cannot create administrators.
 - Authenticated requests recheck that the account remains active and refresh its role from the database. If the database cannot verify an account, the request fails closed.
+- Administrators can deactivate or reactivate cashier accounts in Team accounts; only an existing administrator or the local CLI bootstrap can create administrator accounts.
 - Sessions use strict, cookie-only IDs with `HttpOnly` and `SameSite=Lax` cookies; cookies are marked `Secure` when Apache serves HTTPS. Sign-in regenerates the session ID.
 - State-changing forms require a session CSRF token. Responses set a restrictive Content Security Policy, clickjacking/content-type protections, a referrer policy, a restrictive permissions policy, and no-store cache headers. Confirmation and print controls use the local external JavaScript file instead of inline event handlers.
 - Product image uploads are limited and content-checked; generated image filenames are stored in the protected uploads directory. Keep the configuration, includes, and database maintenance directories protected by their Apache access rules.
@@ -141,6 +144,7 @@ The connection uses `utf8mb4`, exceptions and native PDO prepared statements. Co
 coffee_management/
 |-- index.php
 |-- login.php
+|-- register.php (public cashier account creation)
 |-- logout.php
 |-- dashboard.php
 |-- products.php
@@ -190,7 +194,7 @@ The schema uses InnoDB, foreign keys, decimal monetary values, explicit history 
 Run each item in a local test database before entering business data.
 
 1. **Database connection:** Start MySQL, import the schema, open the site and sign in. If the database is unavailable, verify the database name/user/password and inspect the PHP/Apache error log.
-2. **Login/logout:** Verify a correct password signs in, an incorrect password does not, and the sign-out button ends the session.
+2. **Login/logout/registration:** Verify a correct password signs in, an incorrect or inactive account cannot sign in, the sign-out button ends the session, and account registration creates an active cashier and signs them in immediately.
 3. **Administrator permissions:** Create a cashier from **Team accounts**; verify the cashier cannot open expenses, reports, settings, user management or purchase actions by entering those URLs directly.
 4. **Cashier permissions:** Sign in as cashier; verify product/category viewing and POS access work while modifying those records is denied.
 5. **Categories and products:** Add a category and product, edit both, search/filter, disable a product, and attempt to delete a category in use.
@@ -258,7 +262,7 @@ Run each item in a local test database before entering business data.
 
 1. Confirm PHP sessions are enabled and the PHP session save path is writable.
 2. Use the matching project URL path and clear stale localhost cookies if the session path/name changed.
-3. Verify the account is active. Use the secure setup command only for the first administrator; a second administrator cannot be created by that bootstrap script.
+3. Verify the account is active. Public registrations create active cashier accounts immediately; an administrator can later deactivate them in Team accounts. Use the secure setup command only for the first administrator; a second administrator cannot be created by that bootstrap script.
 4. If Apache cannot connect to MySQL, inspect the log and verify its environment variables. A shell's environment variables are not automatically the same as Apache's.
 
 ### Invalid database import
@@ -284,7 +288,7 @@ Run each item in a local test database before entering business data.
 - Purchase receipt updates an ingredient's displayed unit cost to that purchase's unit cost; it is not a weighted-average inventory valuation system.
 - Sales by category use the product's current category, not a historical category snapshot.
 - Reports intentionally do not show profit. Ingredient costing and accounting are not complete enough to present an accurate gross or net profit.
-- The interface is designed for a local single-cafe XAMPP workflow. Internet-facing production use requires HTTPS, a least-privilege database account, deployment-specific secret management, server hardening, backups, rate limiting and a security review.
+- Public registration immediately grants cashier access, so anyone who can reach the sign-up page can create a cashier account. The interface is designed for a local single-cafe XAMPP workflow. Internet-facing production use requires registration controls, HTTPS, a least-privilege database account, deployment-specific secret management, server hardening, backups, rate limiting and a security review.
 
 ## Development phases completed
 

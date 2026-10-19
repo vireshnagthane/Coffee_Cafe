@@ -24,6 +24,8 @@ This file tracks verified project readiness and follow-up work. Keep statuses fa
 - [x] Removed inline JavaScript event handlers; purchase/delete confirmations and print controls continue to work through the external app script.
 - [x] Verified live security headers; all 14 authenticated management pages returned HTTP 200 with CSP and no browser console errors; purchase-specific confirmation prompts and the report print action worked under CSP.
 - [x] Deactivating a signed-in test account redirected it to sign-in; malformed and valid CSRF tokens behaved as expected; temporary security-test accounts were removed.
+- [x] Added a sign-in-page account-creation link and CSRF-protected staff registration; verified valid submission creates a cashier account. Registration now activates and signs in the new cashier immediately; public registration cannot create administrators.
+- [x] Corrected username form patterns for modern browser regex validation on both public registration and Team accounts.
 
 ## Recommended next checks
 

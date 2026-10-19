@@ -20,6 +20,7 @@
 ## Functional requirements
 
 - Authenticate active users with password hashes and enforce administrator/cashier authorization on the server.
+- Let visitors create and immediately use a cashier account; reserve administrator creation for the local setup utility or an existing administrator.
 - Let signed-in staff explicitly sign out of the authenticated workspace.
 - Create and maintain categories, products, ingredients, recipes, suppliers, customers, purchases, and expenses.
 - Support product image uploads with validation and generated filenames.
