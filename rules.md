@@ -15,10 +15,13 @@ These rules apply to project changes and should preserve the existing PHP/XAMPP 
 ## Security and data handling
 
 - Require authentication and the narrowest appropriate role on every protected page and action.
+- Recheck the current active account and role on authenticated requests; fail closed if the account cannot be verified.
 - State-changing requests must use POST and validate the session CSRF token.
+- Configure strict cookie-only sessions, sensible browser security headers, no-store responses for dynamic pages, and a Content Security Policy that does not require inline JavaScript.
 - Passwords must be created and checked with PHP password-hashing APIs. Never add default credentials or commit real secrets.
 - Validate uploaded file type and size server-side; do not trust the supplied filename or extension.
 - Keep configuration, includes, and maintenance scripts inaccessible over HTTP.
+- Keep the app within its documented local/trusted-network boundary; do not represent local controls as production hardening.
 - Do not weaken foreign keys, uniqueness, validation, or transaction boundaries to make a failing operation appear successful.
 - Keep the database browser administrator-only. Build its table/column choices from the connected schema, bind record values, safely quote validated identifiers, exclude password hashes, and protect the signed-in and last active administrator accounts from deletion/deactivation.
 

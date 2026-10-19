@@ -1,4 +1,14 @@
 (() => {
+    document.addEventListener('submit', event => {
+        const submitter = event.submitter;
+        const message = submitter?.dataset.confirm || event.target.dataset.confirm;
+        if (message && !window.confirm(message)) event.preventDefault();
+    }, true);
+
+    document.addEventListener('click', event => {
+        if (event.target.closest('[data-print]')) window.print();
+    });
+
     const toggle = document.querySelector('[data-sidebar-toggle]');
     const sidebar = document.getElementById('sidebar');
 

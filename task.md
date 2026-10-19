@@ -18,6 +18,12 @@ This file tracks verified project readiness and follow-up work. Keep statuses fa
 - [x] Corrected pending-purchase confirmation prompts so receiving stock and cancelling a purchase each describe their own action.
 - [x] Authenticated browser checks: all 14 management pages loaded with HTTP 200 and no JavaScript errors; POS add-to-cart updated the cart/total and enabled checkout; purchase-line add/edit/remove updated its payload and total; purchase action prompts matched their respective actions.
 - [x] Restyled the top-right sign-out control with the shared button/button-light styles so it matches the rest of the application.
+- [x] Added strict cookie-only session settings, browser security headers, a restrictive Content Security Policy, no-store PHP responses, and versioned CSS/JavaScript asset URLs.
+- [x] Protected authenticated requests now refresh the user's current account status and role from the database; inactive sessions are revoked and authorization fails closed when verification is unavailable.
+- [x] CSRF validation rejects malformed non-string tokens without a type error; successful sign-in rehashes passwords when the configured password algorithm requires it.
+- [x] Removed inline JavaScript event handlers; purchase/delete confirmations and print controls continue to work through the external app script.
+- [x] Verified live security headers; all 14 authenticated management pages returned HTTP 200 with CSP and no browser console errors; purchase-specific confirmation prompts and the report print action worked under CSP.
+- [x] Deactivating a signed-in test account redirected it to sign-in; malformed and valid CSRF tokens behaved as expected; temporary security-test accounts were removed.
 
 ## Recommended next checks
 
@@ -27,6 +33,8 @@ This file tracks verified project readiness and follow-up work. Keep statuses fa
 - [ ] Verify product/recipe setup, checkout, purchase receiving, cancellation, reports, and receipt printing with non-production data.
 - [ ] Sign in and verify product creation in the browser using a new name and existing category.
 - [ ] Manually verify purchase receiving and cancellation with disposable purchase data.
+- [ ] Configure a dedicated least-privilege MySQL account before using shared local real business data.
+- [ ] Do not expose the XAMPP server to the internet; login rate limiting, deployment secret management and production HTTPS/monitoring remain out of scope.
 - [ ] Make a database and project-file backup before using real business data.
 
 ## Current limitations

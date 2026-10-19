@@ -37,10 +37,11 @@
 
 - Run on PHP 8.1 or newer with PDO MySQL, `mbstring`, and `fileinfo`, plus a compatible MySQL/MariaDB server.
 - Use prepared database statements, CSRF tokens for state-changing forms, server-side validation, and role checks.
+- Use strict cookie-only sessions, refresh active-account/role authorization on protected requests, apply browser security headers and a restrictive Content Security Policy, and prevent caching of dynamic pages.
 - Keep money in decimal database columns and perform checkout totals with integer minor units.
 - Preserve referential integrity and audit history using InnoDB, foreign keys, and stock movement records.
 - Work without external JavaScript or CSS services and remain usable on narrow screens.
-- Explain setup, database import, administrator bootstrap, troubleshooting, and backup in `README.md`.
+- Explain setup, database import, administrator bootstrap, local security controls, deployment limitations, troubleshooting, and backup in `README.md`.
 
 ## Out of scope and known limitations
 
@@ -48,5 +49,6 @@
 - Multi-cafe tenancy, cloud hosting, or production hardening.
 - Complete accounting, profit reporting, or weighted-average inventory valuation.
 - Automatic ingredient deductions for products that have no configured recipe.
+- Internet-facing deployment security, login rate limiting, and deployment-specific secrets/monitoring infrastructure.
 
 See [README.md](./README.md) for installation, detailed behavior, limitations, and the manual validation checklist.

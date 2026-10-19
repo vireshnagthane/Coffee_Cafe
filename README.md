@@ -17,8 +17,9 @@ A local-first coffee shop management application built with native PHP, MySQL/Ma
 - Dashboard shift handover notes so staff can pass short updates to the next shift and mark them complete.
 - Administrator-only database browser for viewing, editing, and explicitly confirmed deletion of database records.
 - Optional, repeat-safe demonstration sales for the last seven days, clearly marked `DEMO-`.
+- Local security controls: strict cookie-only sessions, CSRF validation, fresh account/role checks on authenticated requests, security response headers, and validated image uploads.
 
-This is a local XAMPP starter application, not a production deployment. Read [Known limitations](#known-limitations) before using it for real business accounting.
+This is a local XAMPP starter application, not a production deployment. Its default database account is convenient for a fresh local XAMPP install; configure a least-privilege database account for shared local use. Read [Local security and deployment](#local-security-and-deployment) and [Known limitations](#known-limitations) before using it with business data.
 
 ## Project documentation
 
@@ -123,6 +124,16 @@ The main schema script creates new tables on a fresh installation, but does not 
 - `COFFEE_DB_PASSWORD`
 
 The connection uses `utf8mb4`, exceptions and native PDO prepared statements. Connection details are written to the PHP error log on failure; the browser receives a non-sensitive message. To locate the PHP log in XAMPP, inspect `C:\xampp\php\php.ini` for `error_log`; Apache errors are also available from **Logs** in XAMPP Control Panel.
+
+## Local security and deployment
+
+- Use this application only on the local computer or a trusted local network. The default database connection uses the XAMPP `root` account and an empty password when no database environment variables are set; replace this with a dedicated least-privilege database account before sharing the application or storing real business data.
+- Authenticated requests recheck that the account remains active and refresh its role from the database. If the database cannot verify an account, the request fails closed.
+- Sessions use strict, cookie-only IDs with `HttpOnly` and `SameSite=Lax` cookies; cookies are marked `Secure` when Apache serves HTTPS. Sign-in regenerates the session ID.
+- State-changing forms require a session CSRF token. Responses set a restrictive Content Security Policy, clickjacking/content-type protections, a referrer policy, a restrictive permissions policy, and no-store cache headers. Confirmation and print controls use the local external JavaScript file instead of inline event handlers.
+- Product image uploads are limited and content-checked; generated image filenames are stored in the protected uploads directory. Keep the configuration, includes, and database maintenance directories protected by their Apache access rules.
+- Back up the database and project files and keep database credentials, backups, logs, and customer exports out of Git.
+- This does not make the app internet-ready: it does not provide login rate limiting, deployment secret management, centralized monitoring, or a reviewed HTTPS/reverse-proxy setup. Do not expose the XAMPP server directly to the internet; a production deployment needs a separate security design and review.
 
 ## Project layout
 

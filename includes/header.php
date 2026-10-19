@@ -11,8 +11,8 @@ $flashMessage = take_flash();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle) ?> · <?= e(APP_NAME) ?></title>
-    <link rel="stylesheet" href="<?= e(APP_BASE_URL) ?>/assets/css/style.css">
-    <script src="<?= e(APP_BASE_URL) ?>/assets/js/app.js" defer></script>
+    <link rel="stylesheet" href="<?= e(APP_BASE_URL) ?>/assets/css/style.css?v=<?= e(APP_ASSET_VERSION) ?>">
+    <script src="<?= e(APP_BASE_URL) ?>/assets/js/app.js?v=<?= e(APP_ASSET_VERSION) ?>" defer></script>
 </head>
 <body class="app-shell">
 <aside class="sidebar" id="sidebar">

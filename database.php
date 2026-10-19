@@ -407,7 +407,7 @@ require __DIR__ . '/includes/header.php';
                             <td>
                                 <div class="database-row-actions">
                                     <a class="table-action" href="<?= e(APP_BASE_URL) ?>/database.php?table=<?= e(rawurlencode($selectedTable)) ?>&amp;edit=<?= e(rawurlencode($encodedKey)) ?>">Edit</a>
-                                    <form method="post" onsubmit="return confirm('Permanently delete this record? This cannot be undone.');">
+                                    <form method="post" data-confirm="Permanently delete this record? This cannot be undone.">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="table" value="<?= e($selectedTable) ?>">

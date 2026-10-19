@@ -245,7 +245,7 @@ require __DIR__ . '/includes/header.php';
                         <input type="hidden" name="status" value="<?= $product['status'] === 'available' ? 'unavailable' : 'available' ?>">
                         <button class="text-button" type="submit"><?= $product['status'] === 'available' ? 'Disable' : 'Enable' ?></button>
                     </form>
-                    <?php if ((int) $product['order_item_count'] === 0): ?><form method="post" onsubmit="return confirm('Delete this product?')">
+                    <?php if ((int) $product['order_item_count'] === 0): ?><form method="post" data-confirm="Delete this product?">
                         <?= csrf_field() ?><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="<?= e($product['id']) ?>">
                         <button class="text-button danger-text" type="submit">Delete</button>
                     </form><?php endif; ?>

@@ -143,7 +143,7 @@ require __DIR__ . '/includes/header.php';
                         <?php if ($isAdmin): ?><td class="row-actions">
                             <a href="<?= e(APP_BASE_URL) ?>/categories.php?edit=<?= e($category['id']) ?>">Edit</a>
                             <?php if ((int) $category['product_count'] === 0): ?>
-                                <form method="post" onsubmit="return confirm('Delete this unused category?')">
+                                <form method="post" data-confirm="Delete this unused category?">
                                     <?= csrf_field() ?><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="<?= e($category['id']) ?>">
                                     <button type="submit" class="text-button danger-text">Delete</button>
                                 </form>

@@ -145,12 +145,12 @@ require __DIR__ . '/includes/header.php';
     <a class="button button-light" href="<?= e(APP_BASE_URL) ?>/orders.php">← Orders</a>
     <div class="receipt-actions">
         <?php if ($isAdmin && $order['status'] === 'completed'): ?>
-            <form method="post" onsubmit="return confirm('Cancel this order? Its recipe stock usage will be restored once.')">
+            <form method="post" data-confirm="Cancel this order? Its recipe stock usage will be restored once.">
                 <?= csrf_field() ?><input type="hidden" name="id" value="<?= e($orderId) ?>"><input type="hidden" name="action" value="cancel">
                 <button class="button button-danger" type="submit">Cancel order</button>
             </form>
         <?php endif; ?>
-        <button class="button button-primary" type="button" onclick="window.print()">Print receipt <span>⎙</span></button>
+        <button class="button button-primary" type="button" data-print>Print receipt <span>⎙</span></button>
     </div>
 </div>
 <article class="receipt panel">

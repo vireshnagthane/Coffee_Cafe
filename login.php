@@ -34,6 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 && $user['status'] === 'active'
                 && password_verify($password, $user['password_hash'])
             ) {
+                if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
+                    $rehash = db()->prepare('UPDATE users SET password_hash = :password_hash WHERE id = :id');
+                    $rehash->execute([
+                        'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+                        'id' => $user['id'],
+                    ]);
+                }
                 session_regenerate_id(true);
                 unset($user['password_hash'], $user['status']);
                 $_SESSION['user'] = $user;
@@ -59,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign in · <?= e(APP_NAME) ?></title>
-    <link rel="stylesheet" href="<?= e(APP_BASE_URL) ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?= e(APP_BASE_URL) ?>/assets/css/style.css?v=<?= e(APP_ASSET_VERSION) ?>">
 </head>
 <body class="login-page">
     <main class="login-layout">

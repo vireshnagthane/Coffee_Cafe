@@ -10,11 +10,11 @@
 ## Request flow
 
 1. A browser requests a PHP page from Apache.
-2. The page loads `config/app.php`, which configures the session and shared helpers. Protected pages load `includes/auth.php` and require the appropriate role.
+2. The page loads `config/app.php`, which configures strict cookie-only sessions and emits the shared security headers. Protected pages load `includes/auth.php`, which verifies the account is still active and refreshes its role from the database before applying page-level role checks.
 3. Database-backed pages load `config/database.php` and use the shared `db(): PDO` connection.
 4. A POST handler validates the request and CSRF token. Multi-row business operations use PDO transactions and database constraints.
 5. PHP renders HTML using shared escaping, navigation, and footer helpers. `assets/css/style.css` supplies the responsive interface; `assets/js/app.js` supplies client-side interactions such as POS cart calculations and dashboard chart drawing.
-6. The authenticated page header offers a labeled top-right sign-out form that posts to `logout.php` with the session CSRF token; the handler clears the session and redirects to sign-in.
+6. The authenticated page header offers a labeled top-right sign-out form that posts to `logout.php` with the session CSRF token; the handler clears the session and redirects to sign-in. Confirmation and print actions use the local external JavaScript file so the Content Security Policy does not require inline script exceptions.
 
 ## Main areas
 
@@ -52,6 +52,7 @@ For an existing database, apply `database/migrations/001_shift_handover_notes.sq
 
 - `config/app.php` sets `APP_BASE_URL`; it must match the folder name beneath the Apache document root.
 - `config/database.php` accepts `COFFEE_DB_HOST`, `COFFEE_DB_NAME`, `COFFEE_DB_USER`, and `COFFEE_DB_PASSWORD`; local defaults are documented in `README.md`.
+- `config/app.php` also sets a restrictive Content Security Policy and browser security headers on PHP responses, and prevents dynamic application pages from being cached.
 - The `.htaccess` files deny direct web access to configuration, includes, and database scripts.
 - Uploaded product images are stored under `assets/images/products/`.
-- This architecture targets local XAMPP use. Internet-facing deployment requires a separate security and operational design.
+- This architecture targets local XAMPP use. It does not provide login rate limiting or deployment-specific secret/monitoring infrastructure; internet-facing deployment requires a separate security and operational design.

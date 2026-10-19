@@ -123,7 +123,7 @@ if ($error === null) {
 $pageTitle = 'Reports';
 require __DIR__ . '/includes/header.php';
 ?>
-<section class="welcome-row"><div><h2>Business reports</h2><p>Review recorded sales, stock, purchases and expenses.</p></div><button class="button button-light no-print" type="button" onclick="window.print()">Print reports <span>⎙</span></button></section>
+<section class="welcome-row"><div><h2>Business reports</h2><p>Review recorded sales, stock, purchases and expenses.</p></div><button class="button button-light no-print" type="button" data-print>Print reports <span>⎙</span></button></section>
 <div class="demo-data-note">DEMO dataset: totals include sample orders with a <strong>DEMO-</strong> number.</div>
 <section class="panel report-filter no-print">
     <form class="filter-bar" method="get"><label for="report-from">From</label><input id="report-from" type="date" name="from" required value="<?= e($fromDate) ?>"><label for="report-to">To</label><input id="report-to" type="date" name="to" required value="<?= e($toDate) ?>"><button class="button button-primary" type="submit">Run report</button></form>
