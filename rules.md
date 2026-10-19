@@ -20,6 +20,7 @@ These rules apply to project changes and should preserve the existing PHP/XAMPP 
 - Validate uploaded file type and size server-side; do not trust the supplied filename or extension.
 - Keep configuration, includes, and maintenance scripts inaccessible over HTTP.
 - Do not weaken foreign keys, uniqueness, validation, or transaction boundaries to make a failing operation appear successful.
+- Keep the database browser administrator-only. Build its table/column choices from the connected schema, bind record values, safely quote validated identifiers, exclude password hashes, and protect the signed-in and last active administrator accounts from deletion/deactivation.
 
 ## Database changes
 

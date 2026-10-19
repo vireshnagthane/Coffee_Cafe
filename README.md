@@ -5,15 +5,17 @@ A local-first coffee shop management application built with native PHP, MySQL/Ma
 ## Current features
 
 - Password-hashed administrator and cashier accounts, role checks, CSRF protection and POST-only state changes.
+- A clearly labeled **Sign out** button in the top-right corner of authenticated pages, styled to match the shared light buttons.
 - Database-backed dashboard, categories and product management.
 - Validated product-image uploads, stored under a generated filename.
 - POS with server-side prices and totals, optional customers, cash/UPI/card recording, payment status and administrator-only discounts.
 - Tax-exclusive checkout using the rate configured in settings.
 - Transactional sales, recipe-based ingredient deductions, stock movement history, double-submit protection and once-only cancellation restoration.
-- Suppliers, purchase records and once-only receipt of purchased stock.
+- Suppliers, purchase records, action-specific confirmation for purchase receiving/cancellation, and once-only receipt of purchased stock.
 - Customers and order history, expenses, sales/stock/purchase reports, settings and printable receipts.
 - Responsive offline UI with a locally drawn seven-day sales chart.
 - Dashboard shift handover notes so staff can pass short updates to the next shift and mark them complete.
+- Administrator-only database browser for viewing, editing, and explicitly confirmed deletion of database records.
 - Optional, repeat-safe demonstration sales for the last seven days, clearly marked `DEMO-`.
 
 This is a local XAMPP starter application, not a production deployment. Read [Known limitations](#known-limitations) before using it for real business accounting.
@@ -102,9 +104,10 @@ XAMPP installation paths and MySQL credentials vary. If PHP is installed elsewhe
    This setup utility refuses to create an administrator if one already exists. Do not expose the script through Apache; it explicitly exits unless run by PHP CLI.
 11. Open [http://localhost/coffee_management/](http://localhost/coffee_management/) and sign in with the account you just created.
 12. Open **Settings** to configure the cafe name, contact details, currency, tax rate and receipt footer. Tax is exclusive: it is calculated on subtotal minus discount, then added to the total. The default tax rate is zero.
-13. Add categories and products. In **Inventory**, add ingredients, record opening quantities, set minimum levels and configure each product's recipe. Products with no recipe lines do not consume ingredient stock.
+13. Add categories and products. New products receive their IDs automatically; choose an existing category and use a unique product name. In **Inventory**, add ingredients, record opening quantities, set minimum levels and configure each product's recipe. Products with no recipe lines do not consume ingredient stock.
 14. Add suppliers and customers if needed. Use the POS to record an order. A selected cash, UPI or card method is only recorded; no payment is sent to a gateway.
 15. Use **Orders** to view the order and print a receipt. Verify the order, item snapshots and stock movements in phpMyAdmin.
+16. Administrators can open **Database** to inspect application tables and edit records. Deleting records is permanent, requires confirmation, and may be blocked by linked records. Direct edits can bypass stock and sales workflows; back up first and use the dedicated management pages for routine work. Password hashes are not shown or editable; use Team accounts for account access and password changes.
 
 ### Upgrade an existing installation
 
@@ -142,6 +145,7 @@ coffee_management/
 |-- reports.php
 |-- settings.php
 |-- users.php
+|-- database.php (administrator-only record browser)
 |-- config/
 |   |-- .htaccess
 |   |-- app.php
@@ -194,6 +198,7 @@ Run each item in a local test database before entering business data.
 18. **CSRF and request method:** Submit state-changing forms normally; verify a GET request cannot delete, receive, cancel or complete anything and a missing/incorrect CSRF token is rejected.
 19. **Demo sales:** Run `database/seed_demo_sales.php` twice. The first run should add 14 `DEMO-` orders; the second should add none and should not deduct stock again.
 20. **Shift handover:** As a signed-in staff member, add a short note on the dashboard, confirm it appears with your name, then mark it done and confirm it leaves the open list.
+21. **Database browser:** As an administrator, browse several tables, edit a disposable test record, delete it with the confirmation checkbox, and verify that deleting a linked record is blocked. Confirm password hashes never appear and the signed-in/last active administrator cannot be deleted or demoted.
 
 ## Backups
 

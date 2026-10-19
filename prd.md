@@ -20,6 +20,7 @@
 ## Functional requirements
 
 - Authenticate active users with password hashes and enforce administrator/cashier authorization on the server.
+- Let signed-in staff explicitly sign out of the authenticated workspace.
 - Create and maintain categories, products, ingredients, recipes, suppliers, customers, purchases, and expenses.
 - Support product image uploads with validation and generated filenames.
 - Build POS orders from available products; recalculate prices, tax, discount, and totals on the server.
@@ -29,6 +30,7 @@
 - Configure cafe details, currency, tax rate, and receipt footer.
 - Show dashboard and date-filtered reports for sales, orders, products, stock, purchases, and expenses.
 - Let staff share short shift handover notes on the dashboard and mark open notes complete.
+- Let administrators inspect, edit, and delete application database records with safeguards for passwords, active administrator access, and relational integrity.
 - Provide optional, clearly labeled demonstration catalog and sales data without creating an administrator with a default password.
 
 ## Quality and operational requirements

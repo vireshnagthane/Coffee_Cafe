@@ -23,8 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $pdo = db();
             $action = (string) ($_POST['action'] ?? '');
-            $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT) ?: null;
-            if (!$id) {
+            $idInput = trim((string) ($_POST['id'] ?? ''));
+            $id = null;
+            if ($idInput !== '') {
+                $validatedId = filter_var($idInput, FILTER_VALIDATE_INT);
+                if (!is_int($validatedId) || $validatedId < 1) {
+                    throw new InvalidArgumentException('Select a valid product.');
+                }
+                $id = $validatedId;
+            }
+            if (in_array($action, ['availability', 'delete'], true) && $id === null) {
                 throw new InvalidArgumentException('Select a valid product.');
             }
             if ($action === 'availability') {

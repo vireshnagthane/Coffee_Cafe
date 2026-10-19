@@ -39,16 +39,13 @@ $flashMessage = take_flash();
             <a class="nav-link <?= $pageTitle === 'Reports' ? 'active' : '' ?>" href="<?= e(APP_BASE_URL) ?>/reports.php"><span aria-hidden="true">▧</span> Reports</a>
             <a class="nav-link <?= $pageTitle === 'Settings' ? 'active' : '' ?>" href="<?= e(APP_BASE_URL) ?>/settings.php"><span aria-hidden="true">⚙</span> Settings</a>
             <a class="nav-link <?= $pageTitle === 'User accounts' ? 'active' : '' ?>" href="<?= e(APP_BASE_URL) ?>/users.php"><span aria-hidden="true">♙</span> Team accounts</a>
+            <a class="nav-link <?= $pageTitle === 'Database' ? 'active' : '' ?>" href="<?= e(APP_BASE_URL) ?>/database.php"><span aria-hidden="true">▤</span> Database</a>
         <?php endif; ?>
         <div class="nav-coming">Your cafe workspace, available on this computer.</div>
     </nav>
     <div class="sidebar-footer">
         <span class="avatar"><?= e(strtoupper(substr((string) ($currentUser['full_name'] ?? 'U'), 0, 1))) ?></span>
         <span class="user-label"><strong><?= e($currentUser['full_name'] ?? 'User') ?></strong><small><?= e(ucfirst($currentUser['role'] ?? '')) ?></small></span>
-        <form action="<?= e(APP_BASE_URL) ?>/logout.php" method="post">
-            <?= csrf_field() ?>
-            <button class="icon-button" type="submit" aria-label="Sign out" title="Sign out">↪</button>
-        </form>
     </div>
 </aside>
 <div class="main-column">
@@ -58,7 +55,13 @@ $flashMessage = take_flash();
             <span class="eyebrow">COFFEE SHOP OPERATIONS</span>
             <h1><?= e($pageTitle) ?></h1>
         </div>
-        <div class="topbar-right"><span class="status-dot"></span> Local workspace</div>
+        <div class="topbar-actions">
+            <span class="topbar-right"><span class="status-dot"></span> Local workspace</span>
+            <form action="<?= e(APP_BASE_URL) ?>/logout.php" method="post">
+                <?= csrf_field() ?>
+                <button class="button button-light logout-button" type="submit"><span aria-hidden="true">↪</span> Sign out</button>
+            </form>
+        </div>
     </header>
     <main class="page-content">
         <?php if ($flashMessage !== null): ?>
